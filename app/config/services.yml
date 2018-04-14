@@ -33,3 +33,8 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    app.command.buy-icecream:
+        class: AppBundle\Command\AppBuyIcecreamCommand
+        tags:
+            -{name: console.command}
