@@ -5,11 +5,12 @@ namespace AppBundle\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
-class AppBuyIcecreamCommand extends Command
+class AppBuyIcecreamCommand extends ContainerAwareCommand  
 {
     protected function configure()
     {        
@@ -22,23 +23,11 @@ class AppBuyIcecreamCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $scoopPrice = 30;
-        $toppingPrice = 20;
-        
-        $scoopsCount =[
-            '1'=>'1',
-            '2'=>'2',
-            '3'=>'3',
-            '4'=>'4',
-            '5'=>'5',
-        ];
-        $toppingsCount =[
-            '1'=>'1',
-            '2'=>'2',
-            '3'=>'3',
-            '4'=>'4',
-            '5'=>'5',
-        ];
+        /* Fetched shop values from config.yml*/
+        $scoopPrice = $this->getContainer()->getParameter('shop.scoop_price');
+        $toppingPrice = $this->getContainer()->getParameter('shop.topping_price');
+        $scoopsCount = $this->getContainer()->getParameter('shop.scoops_count');
+        $toppingsCount = $this->getContainer()->getParameter('shop.toppings_count');
         
         $helper = $this->getHelper('question');
         

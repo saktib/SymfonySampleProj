@@ -7,6 +7,10 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    shop.scoop_price: 30
+    shop.topping_price: 20
+    shop.scoops_count: { 1:1, 2:2, 3:3, 4:4, 5:5 }
+    shop.toppings_count: { 1:1, 2:2, 3:3, 4:4, 5:5 }
 
 framework:
     #esi: ~
