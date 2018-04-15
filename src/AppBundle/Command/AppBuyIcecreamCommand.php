@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use AppBundle\Event\CreateAccountsEvent;
 
 class AppBuyIcecreamCommand extends ContainerAwareCommand  
 {
@@ -26,6 +28,7 @@ class AppBuyIcecreamCommand extends ContainerAwareCommand
         /* Fetched shop values from config.yml*/
         $scoopPrice = $this->getContainer()->getParameter('shop.scoop_price');
         $toppingPrice = $this->getContainer()->getParameter('shop.topping_price');
+        $accountPrice = $this->getContainer()->getParameter('shop.account_price');
         $scoopsCount = $this->getContainer()->getParameter('shop.scoops_count');
         $toppingsCount = $this->getContainer()->getParameter('shop.toppings_count');
         
@@ -52,8 +55,14 @@ class AppBuyIcecreamCommand extends ContainerAwareCommand
         /*Toal Price Calculation*/
             $totalPrice = $scoopsTotalPrice+$toppingsTotalPrice;
         
-        
-        $output->writeln('Your have to pay: '.$totalPrice );
+        if($totalPrice > $accountPrice){
+            // creates the OrderPlacedEvent and dispatches it.
+            $dispatcher = new EventDispatcher();
+            $event = new CreateAccountsEvent();
+            $dispatcher->dispatch(CreateAccountsEvent::NAME, $event);
+        }else{
+            // Print the price to pay.
+            $output->writeln('Your have to pay: '.$totalPrice );
+        }
     }
-
 }

@@ -9,6 +9,7 @@ parameters:
     locale: en
     shop.scoop_price: 30
     shop.topping_price: 20
+    shop.account_price: 100
     shop.scoops_count: { 1:1, 2:2, 3:3, 4:4, 5:5 }
     shop.toppings_count: { 1:1, 2:2, 3:3, 4:4, 5:5 }
 
